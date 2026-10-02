@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Book — Ourika Valley | PROVAN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0D0D0D;
+  --card:#141414;
+  --surface:#1C1C1C;
+  --border:#2A2A2A;
+  --border-hover:#444;
+  --text:#F0F0F0;
+  --muted:#888;
+  --subtle:#555;
+  --gold:#C9A84C;
+  --gold-dim:#8a6e2e;
+  --white:#FFFFFF;
+  --green:#25D366;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  padding:0;
+  margin:0;
+}
+
+/* ── MAIN CARD ── */
+.booking-card{
+  max-width:960px;
+  margin:0 auto;
+  border:1px solid var(--border);
+  background:var(--card);
+  overflow:hidden;
+}
+
+/* ── HEADER STRIP ── */
+.card-header{
+  background:linear-gradient(135deg,#0f1a0f 0%,#1a2a1a 100%);
+  border-bottom:1px solid var(--border);
+  padding:28px 36px 24px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.card-header-left{}
+.tour-tag{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:6px;
+}
+.tour-title{
+  font-size:26px;
+  font-weight:700;
+  color:var(--white);
+  line-height:1.15;
+}
+.tour-subtitle{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:5px;
+}
+.tour-badges{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+.badge{
+  border:1px solid var(--border-hover);
+  padding:5px 12px;
+  font-size:11px;
+  font-weight:500;
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+.price-pill{
+  background:var(--gold);
+  color:#000;
+  font-size:13px;
+  font-weight:700;
+  padding:8px 18px;
+  white-space:nowrap;
+  align-self:flex-start;
+  letter-spacing:0.03em;
+}
+
+/* ── BODY: 2 cols ── */
+.card-body{
+  display:grid;
+  grid-template-columns:1fr 340px;
+  min-height:420px;
+}
+
+/* LEFT: info */
+.info-col{
+  padding:30px 36px;
+  border-right:1px solid var(--border);
+}
+.info-section{margin-bottom:24px}
+.info-label{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:10px;
+}
+.info-text{
+  font-size:13px;
+  color:#bbb;
+  line-height:1.7;
+}
+.includes-list{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.includes-list li{
+  font-size:13px;
+  color:#bbb;
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  line-height:1.5;
+}
+.includes-list li .ic{
+  color:var(--gold);
+  flex-shrink:0;
+  margin-top:1px;
+  font-style:normal;
+}
+
+/* Itinerary timeline */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{
+  display:flex;
+  gap:12px;
+  padding:6px 0;
+  position:relative;
+}
+.tl-time{
+  font-size:11px;
+  font-weight:700;
+  color:var(--gold);
+  min-width:42px;
+  flex-shrink:0;
+  padding-top:1px;
+  font-variant-numeric:tabular-nums;
+}
+.tl-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--border-hover);
+  flex-shrink:0;
+  margin-top:4px;
+  position:relative;
+}
+.tl-item:not(:last-child) .tl-dot::after{
+  content:'';
+  position:absolute;
+  top:8px;left:3px;
+  width:1px;
+  height:calc(100% + 12px);
+  background:var(--border);
+}
+.tl-desc{
+  font-size:12px;
+  color:#aaa;
+  line-height:1.5;
+  padding-bottom:2px;
+}
+
+/* RIGHT: booking panel */
+.book-col{
+  padding:24px 28px;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.book-section-title{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+/* Calendar */
+.cal-wrap{margin-bottom:20px}
+.cal-nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+.cal-nav-btn{
+  width:28px;height:28px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text);
+  cursor:pointer;
+  font-size:14px;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color 0.15s;
+}
+.cal-nav-btn:hover{border-color:var(--border-hover)}
+.cal-month-label{
+  font-size:13px;
+  font-weight:600;
+  color:var(--white);
+}
+.cal-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:2px;
+}
+.cal-dn{
+  text-align:center;
+  font-size:9px;
+  font-weight:700;
+  color:var(--subtle);
+  padding:4px 0;
+  letter-spacing:0.08em;
+}
+.cal-d{
+  aspect-ratio:1;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;
+  font-weight:500;
+  cursor:pointer;
+  color:var(--text);
+  border:1px solid transparent;
+  transition:all 0.12s;
+  border-radius:2px;
+}
+.cal-d:hover:not(.past):not(.empty){
+  border-color:var(--border-hover);
+  color:var(--white);
+}
+.cal-d.past{color:var(--subtle);cursor:default}
+.cal-d.empty{cursor:default}
+.cal-d.today{border-color:var(--gold-dim);color:var(--gold)}
+.cal-d.sel{
+  background:var(--gold);
+  color:#000;
+  font-weight:700;
+  border-color:var(--gold);
+}
+
+/* Time slot */
+.time-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:20px;
+}
+.time-slot{
+  border:1px solid var(--border-hover);
+  background:var(--surface);
+  padding:9px 16px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--white);
+  cursor:pointer;
+  font-family:'Inter',sans-serif;
+  transition:all 0.12s;
+}
+.time-slot.sel{
+  background:var(--gold);
+  border-color:var(--gold);
+  color:#000;
+}
+.time-note{
+  font-size:11px;
+  color:var(--muted);
+}
+
+/* Pax */
+.pax-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+.pax-label-group{}
+.pax-main-label{
+  font-size:13px;
+  font-weight:600;
+  color:var(--white);
+}
+.pax-sub{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:2px;
+}
+.pax-ctrl{
+  display:flex;
+  align-items:center;
+  border:1px solid var(--border-hover);
+}
+.pax-btn{
+  width:36px;height:36px;
+  background:var(--surface);
+  border:none;
+  color:var(--white);
+  font-size:18px;
+  cursor:pointer;
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.12s;
+}
+.pax-btn:hover{background:var(--border-hover)}
+.pax-val{
+  min-width:40px;
+  text-align:center;
+  font-size:15px;
+  font-weight:700;
+  color:var(--white);
+  background:var(--card);
+  height:36px;
+  display:flex;align-items:center;justify-content:center;
+  border-left:1px solid var(--border-hover);
+  border-right:1px solid var(--border-hover);
+}
+
+/* Price display */
+.price-display{
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:14px 16px;
+  margin-bottom:20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.price-breakdown{font-size:12px;color:var(--muted)}
+.price-total{
+  font-size:22px;
+  font-weight:700;
+  color:var(--gold);
+}
+.price-per{
+  font-size:10px;
+  color:var(--muted);
+  text-align:right;
+  margin-top:1px;
+}
+
+/* CTA */
+.cta-btn{
+  width:100%;
+  background:var(--gold);
+  color:#000;
+  border:none;
+  font-family:'Inter',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:15px;
+  cursor:pointer;
+  transition:background 0.15s;
+  margin-bottom:10px;
+}
+.cta-btn:hover{background:#d4b05a}
+.cta-note{
+  font-size:11px;
+  color:var(--muted);
+  text-align:center;
+  line-height:1.5;
+}
+
+/* divider */
+.divider{
+  height:1px;
+  background:var(--border);
+  margin:18px 0;
+}
+
+/* ── MODAL OVERLAY ── */
+.modal-bg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.modal-bg.open{display:flex}
+.modal{
+  background:var(--card);
+  border:1px solid var(--border-hover);
+  width:100%;
+  max-width:440px;
+  max-height:90vh;
+  overflow-y:auto;
+}
+.modal-header{
+  background:var(--surface);
+  padding:20px 24px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.modal-title{
+  font-size:15px;
+  font-weight:700;
+  color:var(--white);
+}
+.modal-close{
+  background:none;border:none;
+  color:var(--muted);
+  font-size:22px;
+  cursor:pointer;
+  line-height:1;
+  padding:0 4px;
+}
+.modal-close:hover{color:var(--white)}
+.modal-body{padding:24px}
+
+/* Modal summary box */
+.sum-box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  margin-bottom:20px;
+}
+.sum-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding:10px 14px;
+  border-bottom:1px solid var(--border);
+  gap:10px;
+}
+.sum-row:last-child{border-bottom:none}
+.sum-key{
+  font-size:11px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--muted);
+  flex-shrink:0;
+}
+.sum-val{
+  font-size:13px;
+  font-weight:500;
+  color:var(--white);
+  text-align:right;
+}
+.sum-val.big{
+  font-size:18px;
+  font-weight:700;
+  color:var(--gold);
+}
+
+/* Modal form */
+.mform-group{margin-bottom:14px}
+.mform-group label{
+  display:block;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.mform-group input{
+  width:100%;
+  background:var(--surface);
+  border:1px solid var(--border-hover);
+  color:var(--white);
+  font-family:'Inter',sans-serif;
+  font-size:14px;
+  padding:11px 14px;
+  outline:none;
+  transition:border-color 0.12s;
+}
+.mform-group input:focus{border-color:var(--gold)}
+.mform-group input::placeholder{color:var(--subtle)}
+
+.modal-cta{
+  width:100%;
+  background:var(--gold);
+  color:#000;
+  border:none;
+  font-family:'Inter',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:14px;
+  cursor:pointer;
+  margin-top:6px;
+  transition:background 0.15s;
+}
+.modal-cta:hover{background:#d4b05a}
+.modal-back{
+  width:100%;
+  background:none;
+  border:1px solid var(--border-hover);
+  color:var(--muted);
+  font-family:'Inter',sans-serif;
+  font-size:12px;
+  padding:10px;
+  cursor:pointer;
+  margin-top:8px;
+  transition:border-color 0.12s;
+}
+.modal-back:hover{border-color:var(--border-hover);color:var(--white)}
+
+/* Confirmation panel */
+.confirm-panel{display:none;text-align:center;padding:10px 0 6px}
+.confirm-check{
+  width:52px;height:52px;
+  background:var(--gold);
+  color:#000;
+  font-size:24px;
+  font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 14px;
+}
+.confirm-title{
+  font-size:18px;
+  font-weight:700;
+  color:var(--white);
+  margin-bottom:8px;
+}
+.confirm-sub{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.6;
+  margin-bottom:20px;
+}
+.wa-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  background:var(--green);
+  color:#fff;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:13px 20px;
+  margin-bottom:10px;
+  transition:background 0.15s;
+}
+.wa-btn:hover{background:#1ebe59}
+.reset-link{
+  font-size:12px;
+  color:var(--muted);
+  cursor:pointer;
+  text-decoration:underline;
+}
+.reset-link:hover{color:var(--white)}
+
+/* Responsive */
+@media(max-width:700px){
+  .card-body{grid-template-columns:1fr}
+  .info-col{border-right:none;border-bottom:1px solid var(--border);padding:24px 20px}
+  .book-col{padding:20px}
+  .card-header{padding:20px}
+  .tour-title{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="booking-card">
+
+  <!-- ══ HEADER ══ -->
+  <div class="card-header">
+    <div class="card-header-left">
+      <div class="tour-tag">PROVAN Transport · Excursion</div>
+      <div class="tour-title">Ourika Valley<br>& Atlas Mountains 🌿</div>
+      <div class="tour-subtitle">Full day private tour from Marrakech</div>
+      <div class="tour-badges">
+        <div class="badge">⏱ Full Day (9h)</div>
+        <div class="badge">🚐 Private Van</div>
+        <div class="badge">📍 Pick-up at your Riad</div>
+        <div class="badge">🗣 English · Français</div>
+      </div>
+    </div>
+    <div class="price-pill">From 20€ / person</div>
+  </div>
+
+  <!-- ══ BODY ══ -->
+  <div class="card-body">
+
+    <!-- LEFT: Info -->
+    <div class="info-col">
+
+      <div class="info-section">
+        <div class="info-label">About this tour</div>
+        <p class="info-text">Only 1 hour from Marrakech, the <strong style="color:#e0e0e0">Ourika Valley</strong> is one of the most popular day trips from the city. Nestled in the High Atlas Mountains, the valley offers panoramic mountain views, authentic Berber villages, and flowing rivers in lush surroundings.</p>
+      </div>
+
+      <div class="info-section">
+        <div class="info-label">What's included</div>
+        <ul class="includes-list">
+          <li><i class="ic">✓</i>Private air-conditioned van, door-to-door</li>
+          <li><i class="ic">✓</i>Professional bilingual driver</li>
+          <li><i class="ic">✓</i>Visit to a Berber house with mint tea</li>
+          <li><i class="ic">✓</i>Guided hike to Setti Fatma waterfalls</li>
+          <li><i class="ic">✓</i>Traditional souk visit (Mon & Thu)</li>
+          <li><i class="ic">✓</i>Lunch by the river (local specialties)</li>
+          <li><i class="ic">✓</i>Free time in the village</li>
+        </ul>
+      </div>
+
+      <div class="info-section">
+        <div class="info-label">Program</div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-time">08:30</div><div class="tl-dot"></div><div class="tl-desc">Pick-up at your hotel / riad in Marrakech</div></div>
+          <div class="tl-item"><div class="tl-time">09:30</div><div class="tl-dot"></div><div class="tl-desc">Scenic drive through the Atlas foothills with photo stops</div></div>
+          <div class="tl-item"><div class="tl-time">10:00</div><div class="tl-dot"></div><div class="tl-desc">Visit to a Berber house — mint tea & local life</div></div>
+          <div class="tl-item"><div class="tl-time">11:00</div><div class="tl-dot"></div><div class="tl-desc">Traditional souk (market days: Mon & Thu)</div></div>
+          <div class="tl-item"><div class="tl-time">12:00</div><div class="tl-dot"></div><div class="tl-desc">Arrival at Setti Fatma — guided waterfall hike</div></div>
+          <div class="tl-item"><div class="tl-time">13:30</div><div class="tl-dot"></div><div class="tl-desc">Riverside lunch (tagine, couscous, grilled meats)</div></div>
+          <div class="tl-item"><div class="tl-time">15:00</div><div class="tl-dot"></div><div class="tl-desc">Free time — river, village, or relax</div></div>
+          <div class="tl-item"><div class="tl-time">16:00</div><div class="tl-dot"></div><div class="tl-desc">Departure back to Marrakech</div></div>
+          <div class="tl-item"><div class="tl-time">17:30</div><div class="tl-dot"></div><div class="tl-desc">Drop-off at your hotel / riad</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: Booking panel -->
+    <div class="book-col">
+
+      <!-- Calendar -->
+      <div class="cal-wrap">
+        <div class="book-section-title">Select a date</div>
+        <div class="cal-nav">
+          <button class="cal-nav-btn" onclick="prevM()">&#8592;</button>
+          <div class="cal-month-label" id="calLabel"></div>
+          <button class="cal-nav-btn" onclick="nextM()">&#8594;</button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Pick-up time -->
+      <div style="margin-bottom:20px">
+        <div class="book-section-title">Pick-up time</div>
+        <div class="time-row">
+          <div class="time-slot sel" id="slot-830" onclick="selectSlot('08:30')">08:30</div>
+          <div class="time-note">Only departure available</div>
+        </div>
+      </div>
+
+      <!-- PAX -->
+      <div class="pax-row">
+        <div class="pax-label-group">
+          <div class="pax-main-label">Passengers</div>
+          <div class="pax-sub">Max 8 per booking</div>
+        </div>
+        <div class="pax-ctrl">
+          <button class="pax-btn" onclick="chgPax(-1)">−</button>
+          <div class="pax-val" id="paxVal">2</div>
+          <button class="pax-btn" onclick="chgPax(1)">+</button>
+        </div>
+      </div>
+
+      <!-- Price -->
+      <div class="price-display">
+        <div>
+          <div class="price-breakdown" id="priceBreak">2 × 20€</div>
+          <div class="price-total" id="priceTotal">40€</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:12px;color:var(--muted)">per person</div>
+          <div style="font-size:20px;font-weight:700;color:var(--muted)">20€</div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <button class="cta-btn" onclick="openModal()">Book Now</button>
+      <div class="cta-note">💳 Payment on arrival · Cash or card to your driver<br>Confirmation within 30 min via WhatsApp</div>
+
+    </div><!-- end book-col -->
+  </div><!-- end card-body -->
+</div><!-- end booking-card -->
+
+
+<!-- ══════════════════════════════════════
+     MODAL
+══════════════════════════════════════ -->
+<div class="modal-bg" id="modalBg" onclick="closeBgClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Complete your booking</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Summary -->
+      <div class="sum-box" id="modalSum">
+        <div class="sum-row">
+          <div class="sum-key">Tour</div>
+          <div class="sum-val">Ourika Valley & Atlas Mountains</div>
+        </div>
+        <div class="sum-row">
+          <div class="sum-key">Date</div>
+          <div class="sum-val" id="mSumDate">—</div>
+        </div>
+        <div class="sum-row">
+          <div class="sum-key">Pick-up</div>
+          <div class="sum-val">08:30</div>
+        </div>
+        <div class="sum-row">
+          <div class="sum-key">Passengers</div>
+          <div class="sum-val" id="mSumPax">—</div>
+        </div>
+        <div class="sum-row">
+          <div class="sum-key">Total</div>
+          <div class="sum-val big" id="mSumPrice">—</div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div id="modalForm">
+        <div class="mform-group">
+          <label>Full Name *</label>
+          <input id="fName" type="text" placeholder="Jean-Pierre Dupont">
+        </div>
+        <div class="mform-group">
+          <label>Email *</label>
+          <input id="fEmail" type="email" placeholder="your@email.com">
+        </div>
+        <div class="mform-group">
+          <label>WhatsApp / Phone *</label>
+          <input id="fPhone" type="tel" placeholder="+33 6 00 00 00 00">
+        </div>
+        <div class="mform-group">
+          <label>Pick-up Address / Riad Name *</label>
+          <input id="fAddress" type="text" placeholder="Riad Yasmine, Médina Marrakech">
+        </div>
+        <div class="mform-group">
+          <label>Special Requests (optional)</label>
+          <input id="fNote" type="text" placeholder="Child seat, allergies, etc.">
+        </div>
+        <button class="modal-cta" onclick="sendBooking()">Confirm & Send Booking</button>
+        <button class="modal-back" onclick="closeModal()">← Back</button>
+      </div>
+
+      <!-- Confirmation -->
+      <div class="confirm-panel" id="confirmPanel">
+        <div class="confirm-check">✓</div>
+        <div class="confirm-title">Booking Sent!</div>
+        <div class="confirm-sub" id="confirmMsg">Your booking has been received. PROVAN will confirm within 30 minutes via WhatsApp.</div>
+        <a class="wa-btn" id="waLink" href="#" target="_blank">💬 Also Send via WhatsApp</a>
+        <div class="reset-link" onclick="resetAll()">← Book another date</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ══════════════════════════════════
+// CONFIG — edit these values
+// ══════════════════════════════════
+const CFG = {
+  tourName   : 'Ourika Valley & Atlas Mountains',
+  pickup     : '08:30',
+  priceEur   : 20,       // € per person
+  maxPax     : 8,
+  email      : 'contact@provantrans.com',
+  whatsapp   : '212666895966',
+};
+// ══════════════════════════════════
+
+const MO = ['January','February','March','April','May','June',
+            'July','August','September','October','November','December'];
+const DN = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+
+let S = {
+  year : new Date().getFullYear(),
+  month: new Date().getMonth(),
+  date : null,
+  pax  : 2,
+};
+
+// ── Calendar ──
+function buildCal(){
+  const lbl = document.getElementById('calLabel');
+  lbl.textContent = MO[S.month] + ' ' + S.year;
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+  DN.forEach(d => {
+    const el = document.createElement('div');
+    el.className='cal-dn'; el.textContent=d; grid.appendChild(el);
+  });
+  const first = new Date(S.year, S.month, 1);
+  let dow = first.getDay(); dow = dow===0?6:dow-1;
+  const dim = new Date(S.year, S.month+1, 0).getDate();
+  const today = new Date(); today.setHours(0,0,0,0);
+  for(let i=0;i<dow;i++){
+    const e=document.createElement('div'); e.className='cal-d empty'; grid.appendChild(e);
+  }
+  for(let d=1;d<=dim;d++){
+    const e=document.createElement('div');
+    const dt=new Date(S.year,S.month,d);
+    let cls='cal-d';
+    if(dt<today){cls+=' past';}
+    else{
+      e.onclick=()=>selDate(d);
+      if(dt.toDateString()===today.toDateString()) cls+=' today';
+    }
+    if(S.date && S.date.getDate()===d && S.date.getMonth()===S.month && S.date.getFullYear()===S.year) cls+=' sel';
+    e.className=cls; e.textContent=d; grid.appendChild(e);
+  }
+}
+function selDate(d){
+  S.date=new Date(S.year,S.month,d);
+  buildCal();
+}
+function prevM(){S.month--;if(S.month<0){S.month=11;S.year--;}buildCal();}
+function nextM(){S.month++;if(S.month>11){S.month=0;S.year++;}buildCal();}
+
+// ── Time slot (single) ──
+function selectSlot(t){ /* always 08:30 */ }
+
+// ── PAX ──
+function chgPax(d){
+  S.pax=Math.max(1,Math.min(CFG.maxPax, S.pax+d));
+  document.getElementById('paxVal').textContent=S.pax;
+  updatePrice();
+}
+function updatePrice(){
+  const total=S.pax*CFG.priceEur;
+  document.getElementById('priceBreak').textContent=S.pax+' × '+CFG.priceEur+'€';
+  document.getElementById('priceTotal').textContent=total+'€';
+}
+
+// ── Modal ──
+function openModal(){
+  if(!S.date){alert('Please select a date first.');return;}
+  const ds=S.date.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('mSumDate').textContent=ds;
+  document.getElementById('mSumPax').textContent=S.pax+' passenger'+(S.pax>1?'s':'');
+  document.getElementById('mSumPrice').textContent=(S.pax*CFG.priceEur)+'€';
+  document.getElementById('modalBg').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modalBg').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeBgClick(e){if(e.target===document.getElementById('modalBg'))closeModal();}
+
+// ── Send ──
+function sendBooking(){
+  const n=document.getElementById('fName').value.trim();
+  const em=document.getElementById('fEmail').value.trim();
+  const ph=document.getElementById('fPhone').value.trim();
+  const ad=document.getElementById('fAddress').value.trim();
+  const nt=document.getElementById('fNote').value.trim();
+  if(!n||!em||!ph||!ad){alert('Please fill all required fields (*).');return;}
+
+  const ds=S.date.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const total=S.pax*CFG.priceEur;
+
+  // Email
+  const subj=encodeURIComponent('[PROVAN] Booking — '+CFG.tourName+' — '+ds);
+  const body=encodeURIComponent(
+`NEW BOOKING — PROVAN Transport
+================================
+Tour       : ${CFG.tourName}
+Date       : ${ds}
+Pick-up    : ${CFG.pickup}
+Passengers : ${S.pax}
+Total      : ${total}€ (${S.pax} × ${CFG.priceEur}€)
+
+CLIENT
+================================
+Name       : ${n}
+Email      : ${em}
+WhatsApp   : ${ph}
+Pick-up    : ${ad}
+Note       : ${nt||'—'}
+================================
+Sent via provanagency.com`);
+  window.open('mailto:'+CFG.email+'?subject='+subj+'&body='+body,'_blank');
+
+  // WhatsApp
+  const waMsg=encodeURIComponent(
+`🚐 *PROVAN — New Booking*
+▸ Tour: ${CFG.tourName}
+▸ Date: ${ds}
+▸ Pick-up: ${CFG.pickup}
+▸ Passengers: ${S.pax}
+▸ Total: ${total}€
+▸ Name: ${n}
+▸ Phone: ${ph}
+▸ Pick-up address: ${ad}
+${nt?'▸ Note: '+nt:''}
+_via provanagency.com_`);
+  document.getElementById('waLink').href='https://wa.me/'+CFG.whatsapp+'?text='+waMsg;
+
+  // Confirm msg
+  document.getElementById('confirmMsg').innerHTML=
+    `Thank you <strong>${n}</strong>! Your booking for <strong>${CFG.tourName}</strong> on <strong>${ds}</strong> has been sent. PROVAN will confirm within 30 minutes.`;
+
+  document.getElementById('modalForm').style.display='none';
+  document.getElementById('confirmPanel').style.display='block';
+  document.getElementById('modalTitle').textContent='Booking Confirmed 🎉';
+}
+
+function resetAll(){
+  S.date=null;
+  S.pax=2;
+  document.getElementById('paxVal').textContent='2';
+  updatePrice();
+  buildCal();
+  ['fName','fEmail','fPhone','fAddress','fNote'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  document.getElementById('modalForm').style.display='block';
+  document.getElementById('confirmPanel').style.display='none';
+  document.getElementById('modalTitle').textContent='Complete your booking';
+  closeModal();
+}
+
+// ── Init ──
+buildCal();
+updatePrice();
+</script>
+
+</body>
+</html>
